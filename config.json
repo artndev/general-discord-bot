@@ -1,0 +1,4 @@
+{
+    "QUOTABLE_RANDOM_API_URL": "https://api.quotable.io/random/",
+    "QUOTABLE_MAIN_API_URL": "https://api.quotable.io/quotes/"
+}

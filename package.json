@@ -1,0 +1,19 @@
+{
+  "name": "yandexmusicjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node ./src/deploy-commands.js && node ./src/index.js",
+    "refresh": "node ./src/deploy-commands.js",
+    "debug": "eslint ./src --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "discord.js": "^14.9.0",
+    "dotenv": "^16.0.3"
+  }
+}
