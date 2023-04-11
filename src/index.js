@@ -3,11 +3,15 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
 const { 
 	QUOTABLE_RANDOM_API_URL,
-	QUOTABLE_MAIN_API_URL
+	QUOTABLE_MAIN_API_URL,
+	BRAKINGBAD_QUOTES_RANDOM_API_URL
 } = require("../config.json")
 const { getData } = require("./utils.js")
-const { quoteEmbed } = require('./embeds.js')
-const { quoteRow } = require('./buttons.js')
+const { qEmbed } = require('./embeds.js')
+const { 
+	qRow, 
+	qbadRow 
+} = require('./buttons.js')
 const fs = require('fs');
 const path = require('path');
 
@@ -54,20 +58,40 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 	else if (interaction.isButton()) {
 		if (
-			interaction.message.interaction.commandName === "quote" &&
+			interaction.message.interaction.commandName === "q" &&
 			interaction.customId === "refresh"
 		) {
 			getData(QUOTABLE_RANDOM_API_URL)
 				.then(async (json) => { 
 					await interaction.message.edit({ 
-						embeds: [quoteEmbed(
+						embeds: [qEmbed(
 							json["author"], 
 							json["content"],
 							json["tags"]
 						)],
 						components: [ 
-							quoteRow(QUOTABLE_MAIN_API_URL + json["_id"]) 
+							qRow(QUOTABLE_MAIN_API_URL + json["_id"]) 
 						],
+					});
+				})
+				.catch(err => { throw err })
+				.finally(() => {
+					interaction.deferUpdate()
+					console.log("The quote was edited!")
+				});
+		}
+		else if (
+			interaction.message.interaction.commandName === "qbad" &&
+			interaction.customId === "refresh"
+		) {
+			getData(BRAKINGBAD_QUOTES_RANDOM_API_URL)
+				.then(async (json) => { 
+					await interaction.message.edit({ 
+						embeds: [qEmbed(
+							json[0]["author"], 
+							json[0]["quote"],
+							[]
+						)],
 					});
 				})
 				.catch(err => { throw err })

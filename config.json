@@ -1,4 +1,5 @@
 {
     "QUOTABLE_RANDOM_API_URL": "https://api.quotable.io/random/",
-    "QUOTABLE_MAIN_API_URL": "https://api.quotable.io/quotes/"
+    "QUOTABLE_MAIN_API_URL": "https://api.quotable.io/quotes/",
+    "BRAKINGBAD_QUOTES_RANDOM_API_URL": "https://api.breakingbadquotes.xyz/v1/quotes"
 }
