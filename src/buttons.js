@@ -3,27 +3,12 @@ const { ButtonBuilder, ButtonStyle } = require("discord.js");
 
 
 module.exports = {
-    qRow: (url) => {
+    qRow: label => {
         return new ActionRowBuilder()
             .setComponents(
                 new ButtonBuilder()
                     .setCustomId("refresh")
-                    .setLabel("Refresh")
-                    .setStyle(ButtonStyle.Success)
-                    .setEmoji("🔃"),
-                new ButtonBuilder()
-                    .setLabel("Inspect")
-                    .setStyle(ButtonStyle.Link)
-                    .setEmoji("🔢")
-                    .setURL(url)
-        )
-    },
-    qbadRow: () => {
-        return new ActionRowBuilder()
-            .setComponents(
-                new ButtonBuilder()
-                    .setCustomId("refresh")
-                    .setLabel("Refresh")
+                    .setLabel(label)
                     .setStyle(ButtonStyle.Success)
                     .setEmoji("🔃"),
         )

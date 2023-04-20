@@ -2,9 +2,10 @@ require("dotenv").config()
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
 const { 
-	QUOTABLE_RANDOM_API_URL,
-	QUOTABLE_MAIN_API_URL,
-	BRAKINGBAD_QUOTES_RANDOM_API_URL
+	QRANDOM_API_URL,
+	QMAIN_API_URL,
+	QBREAKINGBAD_API_URL,
+	QDAILY_API_URL
 } = require("../config.json")
 const { getData } = require("./utils.js")
 const { qEmbed } = require('./embeds.js')
@@ -61,7 +62,7 @@ client.on(Events.InteractionCreate, async interaction => {
 			interaction.message.interaction.commandName === "q" &&
 			interaction.customId === "refresh"
 		) {
-			getData(QUOTABLE_RANDOM_API_URL)
+			getData(QRANDOM_API_URL)
 				.then(async (json) => { 
 					await interaction.message.edit({ 
 						embeds: [qEmbed(
@@ -69,9 +70,6 @@ client.on(Events.InteractionCreate, async interaction => {
 							json["content"],
 							json["tags"]
 						)],
-						components: [ 
-							qRow(QUOTABLE_MAIN_API_URL + json["_id"]) 
-						],
 					});
 				})
 				.catch(err => { throw err })
@@ -84,13 +82,33 @@ client.on(Events.InteractionCreate, async interaction => {
 			interaction.message.interaction.commandName === "qbad" &&
 			interaction.customId === "refresh"
 		) {
-			getData(BRAKINGBAD_QUOTES_RANDOM_API_URL)
+			getData(QBREAKINGBAD_API_URL)
 				.then(async (json) => { 
 					await interaction.message.edit({ 
 						embeds: [qEmbed(
 							json[0]["author"], 
 							json[0]["quote"],
 							[]
+						)],
+					});
+				})
+				.catch(err => { throw err })
+				.finally(() => {
+					interaction.deferUpdate()
+					console.log("The quote was edited!")
+				});
+		}
+		else if (
+			interaction.message.interaction.commandName === "qdaily" &&
+			interaction.customId === "refresh"
+		) {
+			getData(QDAILY_API_URL)
+				.then(async (json) => { 
+					await interaction.message.edit({ 
+						embeds: [qEmbed(
+							json["quote"]["author"], 
+							json["quote"]["body"],
+							json["quote"]["tags"]
 						)],
 					});
 				})

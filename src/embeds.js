@@ -14,7 +14,7 @@ module.exports = {
             .setFooter({
                 text: tags.length > 0
                     ? tags.join(", ")
-                    : "No tags"
+                    : "famous-quotes"
             })
     },
 }

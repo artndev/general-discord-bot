@@ -1,6 +1,6 @@
-module.exports.getData = async (url) => {
+module.exports.getData = async (url, headersContent = {}) => {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { headers: headersContent });
 
         if (response.ok) {
             return await response.json();

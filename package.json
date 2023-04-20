@@ -7,6 +7,8 @@
   "scripts": {
     "start": "node ./src/deploy-commands.js && node ./src/index.js",
     "refresh": "node ./src/deploy-commands.js",
+    "m": "node ./src/db/setup.js",
+    "mt": "node ./src/db/test.js",
     "debug": "eslint ./src --fix"
   },
   "keywords": [],
@@ -14,6 +16,7 @@
   "license": "ISC",
   "devDependencies": {
     "discord.js": "^14.9.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "mongodb": "^5.2.0"
   }
 }
