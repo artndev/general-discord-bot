@@ -3,7 +3,8 @@ const { QDAILY_API_URL } = require('../../config.json')
 
 const { getData } = require('../utils.js')
 const { qEmbed } = require('../embeds.js')
-const { qRow } = require('../buttons.js')
+const { qRow } = require('../buttons.js');
+const { isDaily } = require('../db/setup.js');
 
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
 		.setName('qdaily')
 		.setDescription('Quote of the day'),
 	async execute(msg) {
+
         getData(QDAILY_API_URL)
             .then(async (json) => {
                 await msg.reply({ 
@@ -19,7 +21,10 @@ module.exports = {
                         json["quote"]["body"],
                         json["quote"]["tags"]
                     )],
-                    components: [ qRow("I hate it. Next one!") ],
+                    components: [ qRow(
+                        "I hate it. Next one!", 
+                        await isDaily(msg.member.user.tag)
+                    ) ],
                 });
             })
             .catch(err => { throw err })

@@ -1,7 +1,5 @@
 {
     "QRANDOM_API_URL": "https://api.quotable.io/random/",
     "QMAIN_API_URL": "https://api.quotable.io/quotes/",
-    "QDAILY_API_URL": "https://favqs.com/api/qotd/",
-
-    "QBREAKINGBAD_API_URL": "https://api.breakingbadquotes.xyz/v1/quotes/"
+    "QDAILY_API_URL": "https://favqs.com/api/qotd/"
 }

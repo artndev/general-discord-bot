@@ -4,7 +4,6 @@ const { DISCORD_TOKEN } = process.env;
 const { 
 	QRANDOM_API_URL,
 	QMAIN_API_URL,
-	QBREAKINGBAD_API_URL,
 	QDAILY_API_URL
 } = require("../config.json")
 const { getData } = require("./utils.js")
@@ -69,26 +68,6 @@ client.on(Events.InteractionCreate, async interaction => {
 							json["author"], 
 							json["content"],
 							json["tags"]
-						)],
-					});
-				})
-				.catch(err => { throw err })
-				.finally(() => {
-					interaction.deferUpdate()
-					console.log("The quote was edited!")
-				});
-		}
-		else if (
-			interaction.message.interaction.commandName === "qbad" &&
-			interaction.customId === "refresh"
-		) {
-			getData(QBREAKINGBAD_API_URL)
-				.then(async (json) => { 
-					await interaction.message.edit({ 
-						embeds: [qEmbed(
-							json[0]["author"], 
-							json[0]["quote"],
-							[]
 						)],
 					});
 				})

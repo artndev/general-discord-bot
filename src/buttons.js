@@ -3,14 +3,15 @@ const { ButtonBuilder, ButtonStyle } = require("discord.js");
 
 
 module.exports = {
-    qRow: label => {
+    qRow: (label, isDisabled) => {
         return new ActionRowBuilder()
             .setComponents(
                 new ButtonBuilder()
                     .setCustomId("refresh")
                     .setLabel(label)
                     .setStyle(ButtonStyle.Success)
-                    .setEmoji("🔃"),
+                    .setEmoji("🔃")
+                    .setDisabled(isDisabled)
         )
     },
 }
