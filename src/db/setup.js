@@ -2,7 +2,11 @@ require("dotenv").config()
 const { MongoClient } = require("mongodb");
 
 
-const findByFunc = (full_name) => {
+const dateToHours = date => {
+    return Math.floor(date.getTime() / 3.6e+6)
+}
+
+const findByFunc = full_name => {
     return new Promise((resolve, reject) => {
         MongoClient.connect(process.env.CONNECTION_URI, {
             useNewUrlParser: true,
@@ -42,27 +46,26 @@ module.exports = {
                 .catch(err => reject(err)) 
         })
     },
-    // !!! ДОДЕЛАТЬ РАЗНИЦУ ВРЕМЕНИ 2-УХ ПОЛЬЗОВАТЕЛЕЙ
+
     differenceBetween: async (full_name, full_name2) => {
         try {
             return await findByFunc(full_name)
                 .then(data => { 
-                    return data[0].date.getHours() 
+                    return dateToHours(data[0].date)
                 })
-                .then(async (data) => {
-                    const hours = await findByFunc(full_name2)
+                .then(async (hours) => {
+                    const hours2 = await findByFunc(full_name2)
                         .then(json => { 
-                            return json[0].date.getHours() 
+                            return dateToHours(json[0].date)
                         })
-                    return data - hours
-                })
-                .then(res => {
-                    return Math.abs(res)
+
+                    return Math.abs(hours - hours2)
                 })
         } 
         catch (err) { throw err }
     }
 }
+
 
 
 
