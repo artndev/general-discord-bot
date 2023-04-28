@@ -3,8 +3,7 @@ const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
 const { 
 	QRANDOM_API_URL,
-	QMAIN_API_URL,
-	QDAILY_API_URL
+	QMAIN_API_URL
 } = require("../config.json")
 const { getData } = require("./utils.js")
 const { qEmbed } = require('./embeds.js')
@@ -81,13 +80,13 @@ client.on(Events.InteractionCreate, async interaction => {
 			interaction.message.interaction.commandName === "qdaily" &&
 			interaction.customId === "refresh"
 		) {
-			getData(QDAILY_API_URL)
+			getData(QRANDOM_API_URL)
 				.then(async (json) => { 
 					await interaction.message.edit({ 
 						embeds: [qEmbed(
-							json["quote"]["author"], 
-							json["quote"]["body"],
-							json["quote"]["tags"]
+							json["author"], 
+							json["content"],
+							json["tags"]
 						)],
 					});
 				})

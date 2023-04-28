@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node ./src/deploy-commands.js && node ./src/index.js",
-    "refresh": "node ./src/deploy-commands.js",
+    "s": "node ./src/deploy-commands.js && node ./src/index.js",
+    "r": "node ./src/deploy-commands.js",
     "m": "node ./src/db/setup.js",
     "mt": "node ./src/db/test.js",
     "debug": "eslint ./src --fix"

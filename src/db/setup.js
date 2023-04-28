@@ -1,6 +1,7 @@
 require("dotenv").config()
 const { MongoClient } = require("mongodb");
-const { dateToHours } = require("../utils");
+const { dateToHours, getData } = require("../utils");
+const { QRANDOM_API_URL } = require('../../config.json')
 
 // !!!! СДЕЛАТЬ ОБНОВЛЕНИЕ ДАТЫ В БД ПОСЛЕ НАЖАТИИ НА КНОПКУ
 
@@ -13,30 +14,73 @@ const findByFunc = full_name => {
         })
             .then(client => {
                 const db = client.db("quotes_bot");
-                db.collection("users").find({ full_name: full_name })
-                    .toArray()
-                    .then((arr) => { resolve(arr) })
+
+                db.collection("users").findOne({ 
+                    full_name: full_name
+                })
+                    .then(data => resolve(data))
+                    .catch(err => reject(err))
+            })
+            .catch(async (err) => {
+                if (!(err instanceof TypeError))
+                    throw err
+           
+                return await insertFunc(full_name)
+            }) 
+    })
+}
+
+const insertFunc = full_name => {
+    return new Promise(async (resolve, reject) => {
+        MongoClient.connect(process.env.CONNECTION_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+            .then(async (client) => {
+                const dict = {
+                    full_name: full_name,
+                    date: new Date(),
+                    daily_quote: await getData(QRANDOM_API_URL)
+                }
+                const db = client.db("quotes_bot");
+                
+                db.collection("users").insertOne(dict)
+                    .then(() => resolve(dict))
                     .catch(err => reject(err))
             })
             .catch(err => reject(err)) 
     })
 }
 
-const insertFunc = async (full_name) => {
-    return new Promise(async (resolve, reject) => {
-        if ((await findByFunc(full_name)).length > 0) 
-            reject(false)
 
+
+const updateFunc = full_name => {
+    return new Promise(async (resolve, reject) => {
         MongoClient.connect(process.env.CONNECTION_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
-            .then(client => {
+            .then(async (client) => {
+                const isDaily = await isDailyFunc(full_name)
                 const db = client.db("quotes_bot");
-                db.collection("users").insertOne({
-                    full_name: full_name,
-                    date: new Date()
-                })
+
+                db.collection("users").updateOne(
+                    { full_name: full_name },
+                    isDaily["result"]
+                    ? { 
+                        $set: {
+                            daily_quote: await getData(QRANDOM_API_URL), 
+                            date: new Date() 
+                        } 
+                    }
+                    : {
+                        $set: {
+                            daily_quote: isDaily["data"]["daily_quote"],
+                            date: isDaily["data"]["date"]
+                        }
+                    }
+
+                )
                     .then(() => resolve(true))
                     .catch(err => reject(err))
             })
@@ -46,22 +90,21 @@ const insertFunc = async (full_name) => {
 
 const isDailyFunc = async (full_name) => {
     return findByFunc(full_name)
-        .then(data => { 
-            return (dateToHours(new Date()) - dateToHours(data[0].date)) >= 24
-        })
-        .catch(err => {
-            if (!(err instanceof TypeError))
-                throw err
-           
-            insertFunc(full_name)
-            return true
-        })
+        .then(data => {
+            return {
+                ["result"]: 
+                    (dateToHours(new Date()) - dateToHours(data.date)) >= 24,
+                ["data"]: 
+                    data,
+            }
+        }) 
 }
+
 
 module.exports = {
     findBy: findByFunc,
     insert: insertFunc,
-    isDaily: isDailyFunc,
+    update: updateFunc,
 }
 
 
