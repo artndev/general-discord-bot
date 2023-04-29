@@ -14,13 +14,10 @@ module.exports = {
 	async execute(msg) {
         try {
             const fullName = msg.member.user.tag   
-            update(fullName)
-                .then(async () => {
-                    console.log(1)
-                    return await findBy(fullName)
-                })
-                .then(async (data) => {  
-                    console.log(data)    
+
+            await update(fullName)
+            findBy(fullName)
+                .then(async (data) => {    
                     await msg.reply({ 
                         embeds: [qEmbed(
                             data["daily_quote"]["author"],
@@ -29,7 +26,6 @@ module.exports = {
                         )]
                     });
                 })
-   
         } 
         catch (err) {
             throw err

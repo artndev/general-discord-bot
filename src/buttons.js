@@ -3,7 +3,7 @@ const { ButtonBuilder, ButtonStyle } = require("discord.js");
 
 
 module.exports = {
-    qRow: (label, isDisabled) => {
+    qRow: (label, isDisabled = false) => {
         return new ActionRowBuilder()
             .setComponents(
                 new ButtonBuilder()

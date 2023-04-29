@@ -3,8 +3,6 @@ const { MongoClient } = require("mongodb");
 const { dateToHours, getData } = require("../utils");
 const { QRANDOM_API_URL } = require('../../config.json')
 
-// !!!! СДЕЛАТЬ ОБНОВЛЕНИЕ ДАТЫ В БД ПОСЛЕ НАЖАТИИ НА КНОПКУ
-
 
 const findByFunc = full_name => {
     return new Promise((resolve, reject) => {
@@ -37,22 +35,20 @@ const insertFunc = full_name => {
             useUnifiedTopology: true
         })
             .then(async (client) => {
-                const dict = {
+                const db = client.db("quotes_bot");
+                const dataToPaste = {
                     full_name: full_name,
                     date: new Date(),
                     daily_quote: await getData(QRANDOM_API_URL)
                 }
-                const db = client.db("quotes_bot");
                 
-                db.collection("users").insertOne(dict)
-                    .then(() => resolve(dict))
+                db.collection("users").insertOne(dataToPaste)
+                    .then(() => resolve(dataToPaste))
                     .catch(err => reject(err))
             })
             .catch(err => reject(err)) 
     })
 }
-
-
 
 const updateFunc = full_name => {
     return new Promise(async (resolve, reject) => {
