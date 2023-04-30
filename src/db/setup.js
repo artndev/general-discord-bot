@@ -29,7 +29,7 @@ const findByFunc = full_name => {
 }
 
 const insertFunc = full_name => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         MongoClient.connect(process.env.CONNECTION_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
@@ -51,7 +51,7 @@ const insertFunc = full_name => {
 }
 
 const updateFunc = full_name => {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         MongoClient.connect(process.env.CONNECTION_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true

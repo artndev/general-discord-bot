@@ -1,5 +1,5 @@
 {
-  "name": "yandexmusicjs",
+  "name": "quotes_bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,7 @@
     "s": "node ./src/deploy-commands.js && node ./src/index.js",
     "r": "node ./src/deploy-commands.js",
     "m": "node ./src/db/setup.js",
-    "mt": "node ./src/db/test.js",
-    "debug": "eslint ./src --fix"
+    "mt": "node ./src/db/test.js"
   },
   "keywords": [],
   "author": "",

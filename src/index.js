@@ -1,16 +1,9 @@
 require("dotenv").config()
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
-const { 
-	QRANDOM_API_URL,
-	QMAIN_API_URL
-} = require("../config.json")
+const { QRANDOM_API_URL } = require("../config.json")
 const { getData } = require("./utils.js")
 const { qEmbed } = require('./embeds.js')
-const { 
-	qRow, 
-	qbadRow 
-} = require('./buttons.js')
 const fs = require('fs');
 const path = require('path');
 
@@ -38,7 +31,7 @@ client.once(Events.ClientReady, () => {
 });
 
 client.on(Events.InteractionCreate, async interaction => {
-	// if (!interaction.isChatInputCommand()) return;
+	if (!interaction.isChatInputCommand()) return;
 
 	if (interaction.isCommand()) {
 		const command = client.commands.get(interaction.commandName);
@@ -61,42 +54,20 @@ client.on(Events.InteractionCreate, async interaction => {
 			interaction.customId === "refresh"
 		) {
 			getData(QRANDOM_API_URL)
-				.then(async (json) => { 
+				.then(async (data) => { 
 					await interaction.message.edit({ 
 						embeds: [qEmbed(
-							json["author"], 
-							json["content"],
-							json["tags"]
+							data["author"], 
+							data["content"],
+							data["tags"]
 						)],
 					});
 				})
 				.catch(err => { throw err })
-				.finally(() => {
-					interaction.deferUpdate()
-					console.log("The quote was edited!")
-				});
-		}
-		else if (
-			interaction.message.interaction.commandName === "qdaily" &&
-			interaction.customId === "refresh"
-		) {
-			getData(QRANDOM_API_URL)
-				.then(async (json) => { 
-					await interaction.message.edit({ 
-						embeds: [qEmbed(
-							json["author"], 
-							json["content"],
-							json["tags"]
-						)],
-					});
-				})
-				.catch(err => { throw err })
-				.finally(() => {
-					interaction.deferUpdate()
-					console.log("The quote was edited!")
-				});
+				.finally(() => { interaction.deferUpdate() });
 		}
 	}
 });
+
 
 client.login(DISCORD_TOKEN);

@@ -12,7 +12,7 @@ const { qRow } = require('../buttons.js')
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('q')
-		.setDescription('Random quote'),
+		.setDescription('A random quote'),
 	async execute(msg) {
         getData(QRANDOM_API_URL)
             .then(async (json) => {

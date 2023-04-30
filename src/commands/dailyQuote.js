@@ -1,16 +1,12 @@
-const { SlashCommandBuilder, time } = require('discord.js');
-const { QRANDOM_API_URL } = require('../../config.json')
-
-const { getData } = require('../utils.js')
+const { SlashCommandBuilder } = require('discord.js');
 const { qEmbed } = require('../embeds.js')
-const { qRow } = require('../buttons.js');
-const { isDaily, findBy, update } = require('../db/setup.js');
+const { findBy, update } = require('../db/setup.js');
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('qdaily')
-		.setDescription('Quote of the day'),
+		.setDescription('A quote of the day'),
 	async execute(msg) {
         try {
             const fullName = msg.member.user.tag   
@@ -27,9 +23,7 @@ module.exports = {
                     });
                 })
         } 
-        catch (err) {
-            throw err
-        }
+        catch (err) { throw err }
 	},
 };
 
