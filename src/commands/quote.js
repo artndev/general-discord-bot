@@ -1,8 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { 
-    QRANDOM_API_URL, 
-    QMAIN_API_URL 
-} = require('../../config.json')
+const { QRANDOM_API_URL } = require('../../config.json')
 
 const { getData } = require('../utils.js')
 const { qEmbed } = require('../embeds.js')
