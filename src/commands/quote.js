@@ -12,12 +12,12 @@ module.exports = {
 		.setDescription('A random quote'),
 	async execute(msg) {
         getData(QRANDOM_API_URL)
-            .then(async (json) => {
+            .then(async (data) => {
                 await msg.reply({ 
                     embeds: [qEmbed(
-                        json["author"], 
-                        json["content"],
-                        json["tags"]
+                        data["author"], 
+                        data["content"],
+                        data["tags"]
                     )],
                     components: [ qRow("Refresh") ],
                 });
@@ -25,4 +25,18 @@ module.exports = {
             .catch(err => { throw err })
             .finally(console.log("The quote was created!"));
 	},
+    async executeEdit(interaction) {
+        getData(QRANDOM_API_URL)
+            .then(async (data) => { 
+                await interaction.message.edit({ 
+                    embeds: [qEmbed(
+                        data["author"], 
+                        data["content"],
+                        data["tags"]
+                    )],
+                });
+            })
+            .catch(err => { throw err })
+            .finally(() => { interaction.deferUpdate() });
+    }
 };

@@ -1,9 +1,7 @@
 require("dotenv").config()
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
-const { QRANDOM_API_URL } = require("../config.json")
-const { getData } = require("./utils.js")
-const { qEmbed } = require('./embeds.js')
+const { qExecuteEdit } = require("./commands/quote");
 const fs = require('fs');
 const path = require('path');
 
@@ -52,20 +50,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		if (
 			interaction.message.interaction.commandName === "q" &&
 			interaction.customId === "refresh"
-		) {
-			getData(QRANDOM_API_URL)
-				.then(async (data) => { 
-					await interaction.message.edit({ 
-						embeds: [qEmbed(
-							data["author"], 
-							data["content"],
-							data["tags"]
-						)],
-					});
-				})
-				.catch(err => { throw err })
-				.finally(() => { interaction.deferUpdate() });
-		}
+		) { qExecuteEdit(interaction) }
 	}
 });
 

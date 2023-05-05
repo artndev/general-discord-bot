@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
+
 const { qEmbed } = require('../embeds.js')
 const { findBy, update } = require('../db/setup.js');
 

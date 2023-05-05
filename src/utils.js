@@ -3,9 +3,7 @@ module.exports = {
         try {
             const response = await fetch(
                 url, 
-                { 
-                    headers: headersContent 
-                }
+                { headers: headersContent }
             );
 
             if (response.ok) { return await response.json(); }
