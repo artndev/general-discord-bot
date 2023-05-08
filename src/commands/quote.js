@@ -11,7 +11,7 @@ module.exports = {
 		.setDescription('The random quote')
         .setDMPermission(true),
 	async execute(msg) {
-        getData(QRANDOM_API_URL)
+        getData(QUOTES_API_URL)
             .then(async (data) => {
                 const quote = data[getRandomArbitrary(0, data.length - 1)]
                 
@@ -29,10 +29,10 @@ module.exports = {
             })
             .finally(console.log("The quote was created!"));
 	},
-    async edit(interaction) {
-        getData(QRANDOM_API_URL)
+    async edit(inter) {
+        getData(QUOTES_API_URL)
             .then(async (data) => { 
-                const msg = interaction.message
+                const msg = inter.message
                 const quote = data[getRandomArbitrary(0, data.length - 1)]
                 
                 await msg.edit({ 
@@ -46,6 +46,6 @@ module.exports = {
             .catch((err) => {
                 throw err
             })
-            .finally(interaction.deferUpdate());
+            .finally(inter.deferUpdate());
     }
 };
