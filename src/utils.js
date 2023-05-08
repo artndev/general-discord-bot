@@ -1,14 +1,20 @@
 module.exports = {
-    getData: async (url, headersContent = {}) => {
+    getData: async (url) => {
         try {
-            const response = await fetch(
-                url, 
-                { headers: headersContent }
-            );
+            const response = await fetch(url);
 
-            if (response.ok) { return await response.json(); }
+            if (response.ok) { 
+                return await response.json(); 
+            }
         } 
-        catch (error) { throw error; }
+        catch (error) { 
+            throw error; 
+        }
     },
-    dateToHours: date => { return Math.floor(date.getTime() / 3.6e+6) },
+    dateToHours: date => { 
+        return Math.floor(date.getTime() / 3.6e+6) 
+    },
+    getRandomArbitrary: (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
 }

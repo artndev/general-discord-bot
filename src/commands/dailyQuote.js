@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require('discord.js');
-
 const { qEmbed } = require('../embeds.js')
 const { findBy, update } = require('../db/setup.js');
 
@@ -7,13 +6,13 @@ const { findBy, update } = require('../db/setup.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('qdaily')
-		.setDescription('A quote of the day'),
+		.setDescription('The quote of the day'),
 	async execute(msg) {
         try {
-            const fullName = msg.member.user.tag   
+            const username = msg.member.user.tag   
 
-            await update(fullName)
-            findBy(fullName)
+            await update(username)
+            findBy(username)
                 .then(async (data) => {    
                     await msg.reply({ 
                         embeds: [qEmbed(

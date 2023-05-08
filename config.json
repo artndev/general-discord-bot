@@ -1,4 +1,4 @@
 {
-    "QRANDOM_API_URL": "https://api.quotable.io/random/",
-    "QMAIN_API_URL": "https://api.quotable.io/quotes/"
+    "QRANDOM_API_URL": "https://type.fit/api/quotes/",
+    "QMAIN_API_URL": "https://type.fit/api/quotes/"
 }
