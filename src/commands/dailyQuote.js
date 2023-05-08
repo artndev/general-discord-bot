@@ -6,7 +6,8 @@ const { findBy, update } = require('../db/setup.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('qdaily')
-		.setDescription('The quote of the day'),
+		.setDescription('The quote of the day')
+        .setDMPermission(false),
 	async execute(msg) {
         try {
             const username = msg.member.user.tag   
@@ -23,7 +24,9 @@ module.exports = {
                     });
                 })
         } 
-        catch (err) { throw err }
+        catch (err) { 
+            throw err 
+        }
 	},
 };
 

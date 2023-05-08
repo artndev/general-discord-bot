@@ -10,7 +10,7 @@ module.exports = {
                     .setCustomId ("refresh")
                     .setLabel (label)
                     .setStyle (ButtonStyle.Success)
-                    .setEmoji ("🔃")
+                    // .setEmoji ("🔃")
                     .setDisabled (isDisabled)
         )
     },
