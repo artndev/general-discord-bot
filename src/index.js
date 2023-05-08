@@ -5,6 +5,7 @@ const { edit } = require("./commands/quote");
 const fs = require('fs');
 const path = require('path');
 
+
 const client = new Client({
 	intents: [ GatewayIntentBits.Guilds ],
 });
@@ -12,7 +13,6 @@ const client = new Client({
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath);
-
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
