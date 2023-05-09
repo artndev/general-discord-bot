@@ -10,19 +10,18 @@ module.exports = {
         .setDMPermission(false),
 	async execute(msg) {
         try {
+            await msg.deferReply({ ephemeral: true });
             const username = msg.member.user.tag   
 
             await update(username)
-            findBy(username)
-                .then(async (data) => {    
-                    await msg.reply({ 
-                        embeds: [qEmbed(
-                            data["daily_quote"]["author"],
-                            data["daily_quote"]["content"],
-                            data["daily_quote"]["tags"]
-                        )]
-                    });
-                })
+            const data = await findBy(username)
+            msg.editReply({
+                embeds: [qEmbed(
+                    data["daily_quote"]["author"],
+                    data["daily_quote"]["text"],
+                    `Requested by ${ username }`
+                )],
+            })
         } 
         catch (err) { 
             throw err 

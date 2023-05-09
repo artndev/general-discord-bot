@@ -1,34 +1,37 @@
 require("dotenv").config()
 const { MongoClient } = require("mongodb");
-const { dateToHours, getData } = require("../utils");
-const { QRANDOM_API_URL } = require('../../config.json')
+const { dateToHours, getData, getRandomArbitrary } = require("../utils");
+const { QUOTES_API_URL } = require('../../config.json')
 
 
-const findByFunc = full_name => {
+const findByFunc = (username) => {
     return new Promise((resolve, reject) => {
         MongoClient.connect(process.env.CONNECTION_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
-            .then(client => {
+            .then((client) => {
                 const db = client.db("quotes_bot");
 
                 db.collection("users").findOne({ 
-                    full_name: full_name
+                    username: username
                 })
-                    .then(data => resolve(data))
-                    .catch(err => reject(err))
+                    .then(async (data) => {
+                        if (data === null) {
+                            resolve(await insertFunc(username))
+                        }
+
+                        resolve(data)
+                    })
+                    .catch((err) => reject(err))
             })
-            .catch(async (err) => {
-                if (!(err instanceof TypeError))
-                    throw err
-           
-                return await insertFunc(full_name)
+            .catch((err) => {
+                throw err
             }) 
     })
 }
 
-const insertFunc = full_name => {
+const insertFunc = (username) => {
     return new Promise((resolve, reject) => {
         MongoClient.connect(process.env.CONNECTION_URI, {
             useNewUrlParser: true,
@@ -36,36 +39,50 @@ const insertFunc = full_name => {
         })
             .then(async (client) => {
                 const db = client.db("quotes_bot");
-                const dataToPaste = {
-                    full_name: full_name,
+                const q = new Promise((resolve, reject) => {
+                    getData(QUOTES_API_URL)
+                        .then((data) => {
+                            resolve(data[getRandomArbitrary(0, data.length - 1)])
+                        })
+                        .catch((err) => reject(err))
+                })
+                const data = {
+                    username: username,
+                    daily_quote: await q,
                     date: new Date(),
-                    daily_quote: await getData(QRANDOM_API_URL)
                 }
                 
-                db.collection("users").insertOne(dataToPaste)
-                    .then(() => resolve(dataToPaste))
-                    .catch(err => reject(err))
+                db.collection("users").insertOne(data)
+                    .then(() => resolve(data))
+                    .catch((err) => reject(err))
             })
-            .catch(err => reject(err)) 
+            .catch((err) => reject(err)) 
     })
 }
 
-const updateFunc = full_name => {
+const updateFunc = (username) => {
     return new Promise((resolve, reject) => {
         MongoClient.connect(process.env.CONNECTION_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         })
             .then(async (client) => {
-                const isDaily = await isDailyFunc(full_name)
+                const isDaily = await isDailyFunc(username)
                 const db = client.db("quotes_bot");
+                const q = new Promise((resolve, reject) => {
+                    getData(QUOTES_API_URL)
+                        .then((data) => {
+                            resolve(data[getRandomArbitrary(0, data.length - 1)])
+                        })
+                        .catch((err) => reject(err))
+                })
 
                 db.collection("users").updateOne(
-                    { full_name: full_name },
+                    { username: username },
                     isDaily["result"]
                     ? { 
                         $set: {
-                            daily_quote: await getData(QRANDOM_API_URL), 
+                            daily_quote: await q,    
                             date: new Date() 
                         } 
                     }
@@ -78,18 +95,18 @@ const updateFunc = full_name => {
 
                 )
                     .then(() => resolve(true))
-                    .catch(err => reject(err))
+                    .catch((err) => reject(err))
             })
-            .catch(err => reject(err)) 
+            .catch((err) => reject(err)) 
     })
 }
 
-const isDailyFunc = async (full_name) => {
-    return findByFunc(full_name)
+const isDailyFunc = async (username) => {
+    return findByFunc(username)
         .then(data => {
             return {
                 ["result"]: 
-                    (dateToHours(new Date()) - dateToHours(data.date)) >= 24,
+                    (dateToHours(new Date()) - dateToHours(data["date"])) >= 24,
                 ["data"]: 
                     data,
             }

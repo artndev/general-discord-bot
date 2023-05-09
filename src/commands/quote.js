@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { QUOTES_API_URL } = require('../../config.json')
-const { getData, getRandomArbitrary } = require('../utils.js')
+const { getData, getRandomArbitrary, getRandomQuote } = require('../utils.js')
 const { qEmbed } = require('../embeds.js')
 const { qRow } = require('../buttons.js')
 
@@ -11,9 +11,16 @@ module.exports = {
 		.setDescription('The random quote')
         .setDMPermission(true),
 	async execute(msg) {
+        await msg.deferReply({ ephemeral: true });
+
+        /// !!! ДОРАБОТАТЬ НА ПРИМЕРЕ DAILYQUOTE
+        const data = await getData(QUOTES_API_URL)
+            .then()
         getData(QUOTES_API_URL)
             .then(async (data) => {
-                const quote = data[getRandomArbitrary(0, data.length - 1)]
+                const quote = data[
+                    getRandomArbitrary(0, data.length - 1)
+                ]
                 
                 await msg.reply({ 
                     embeds: [qEmbed(
@@ -33,7 +40,9 @@ module.exports = {
         getData(QUOTES_API_URL)
             .then(async (data) => { 
                 const msg = inter.message
-                const quote = data[getRandomArbitrary(0, data.length - 1)]
+                const quote = data[
+                    getRandomArbitrary(0, data.length - 1)
+                ]
                 
                 await msg.edit({ 
                     embeds: [qEmbed(
