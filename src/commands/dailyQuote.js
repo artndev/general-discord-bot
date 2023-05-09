@@ -11,10 +11,13 @@ module.exports = {
 	async execute(msg) {
         try {
             await msg.deferReply({ ephemeral: true });
-            const username = msg.member.user.tag   
 
+            // * Body of the command
+            const username = msg.member.user.tag   
             await update(username)
             const data = await findBy(username)
+            // * End of the body
+
             msg.editReply({
                 embeds: [qEmbed(
                     data["daily_quote"]["author"],

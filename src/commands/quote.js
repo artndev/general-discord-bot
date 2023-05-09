@@ -13,48 +13,44 @@ module.exports = {
 	async execute(msg) {
         await msg.deferReply({ ephemeral: true });
 
-        /// !!! ДОРАБОТАТЬ НА ПРИМЕРЕ DAILYQUOTE
-        const data = await getData(QUOTES_API_URL)
-            .then()
-        getData(QUOTES_API_URL)
-            .then(async (data) => {
-                const quote = data[
-                    getRandomArbitrary(0, data.length - 1)
-                ]
-                
-                await msg.reply({ 
-                    embeds: [qEmbed(
-                        quote["author"], 
-                        quote["text"],
-                        `Requested by ${ msg.member.user.tag }`
-                    )],
-                    components: [ qRow("Refresh") ],
-                });
-            })
-            .catch((err) => { 
-                throw err 
-            })
-            .finally(console.log("The quote was created!"));
-	},
-    async edit(inter) {
-        getData(QUOTES_API_URL)
-            .then(async (data) => { 
-                const msg = inter.message
-                const quote = data[
-                    getRandomArbitrary(0, data.length - 1)
-                ]
-                
-                await msg.edit({ 
-                    embeds: [qEmbed(
-                        quote["author"], 
-                        quote["text"],
-                        `Requested by ${ msg.interaction.user.tag }`
-                    )],
-                });
+        // * Body of the command
+        const quote = await getData(QUOTES_API_URL)
+            .then((data) => {
+                return data[ getRandomArbitrary(0, data.length - 1) ]
             })
             .catch((err) => {
                 throw err
             })
-            .finally(inter.deferUpdate());
+        // * End of the body
+
+        msg.editReply({
+            embeds: [qEmbed(
+                quote["author"], 
+                quote["text"],
+                `Requested by ${ msg.member.user.tag }`
+            )],
+            components: [ qRow("Refresh") ],
+        })
+	},
+    async edit(inter) {
+        await inter.deferUpdate()
+
+        // * Body of the command
+        const quote = await getData(QUOTES_API_URL)
+            .then((data) => {
+                return data[ getRandomArbitrary(0, data.length - 1) ]
+            })
+            .catch((err) => {
+                throw err
+            })
+        // * End of the body
+
+        inter.editReply({
+            embeds: [qEmbed(
+                quote["author"], 
+                quote["text"],
+                `Requested by ${ inter.user.tag }`
+            )]
+        })        
     }
 };
