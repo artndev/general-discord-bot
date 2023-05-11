@@ -1,0 +1,19 @@
+        await mongoose.connect(process.env.CONNECTION_URI)
+            .then(() => {
+                CLIENT.connect()
+                const doc = new UserModel({
+                    username: username,
+                    daily_quote: daily_quote
+                })
+                doc.save()
+                    .then((doc) => {
+                        console.log("Пользователь успешно сохранен!", doc)
+                    })
+            })
+            .catch((err) => {
+                
+                throw err
+            })
+            .finally(async () => {
+                await mongoose.disconnect()
+            })

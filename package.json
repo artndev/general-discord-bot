@@ -9,14 +9,17 @@
     "r": "node ./src/deploy-commands.js",
     "m": "node ./src/db/setup.js",
     "u": "node ./src/utils.js",
-    "mt": "node ./src/db/test.js"
+    "mt": "node ./src/db/test.js",
+    "mt2": "node ./src/db/setup2.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "app-root-path": "^3.1.0",
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
-    "mongodb": "^5.2.0"
+    "mongodb": "^5.2.0",
+    "mongoose": "^7.1.0"
   }
 }

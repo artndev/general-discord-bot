@@ -12,7 +12,7 @@ module.exports = {
         }
     },
     dateToHours: (date) => { 
-        return Math.floor(date.getTime() / 3.6e+6) 
+        return Math.floor(new Date(date).getTime() / 3.6e+6) 
     },
     getRandomArbitrary: (min, max) => {
         return Math.floor(Math.random() * (max - min) + min);
