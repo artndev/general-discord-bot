@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { QUOTES_API_URL } = require('../../config.json')
-const { getData, getRandomArbitrary, getRandomQuote } = require('../utils.js')
+const { getData, getRandomArbitrary } = require('../utils.js')
 const { qEmbed } = require('../embeds.js')
 const { qRow } = require('../buttons.js')
 
@@ -9,7 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('q')
 		.setDescription('The random quote')
-        .setDMPermission(true),
+        .setDMPermission(false),
 	async execute(msg) {
         await msg.deferReply({ ephemeral: true });
 

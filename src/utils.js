@@ -1,3 +1,6 @@
+const { QUOTES_API_URL } = require('../config.json')
+
+
 module.exports = {
     getData: async (url) => {
         try {
@@ -7,8 +10,8 @@ module.exports = {
                 return await response.json(); 
             }
         } 
-        catch (error) { 
-            throw error; 
+        catch (err) { 
+            throw err; 
         }
     },
     dateToHours: (date) => { 
@@ -16,5 +19,10 @@ module.exports = {
     },
     getRandomArbitrary: (min, max) => {
         return Math.floor(Math.random() * (max - min) + min);
-    }
+    },
+    getRandomQuote: async () => {
+        const data = await module.exports.getData(QUOTES_API_URL)
+
+        return data[module.exports.getRandomArbitrary(0, data.length - 1)]
+    },
 }

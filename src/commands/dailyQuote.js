@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { qEmbed } = require('../embeds.js')
-const { findBy, update } = require('../db/setup.js');
+const { saveUser } = require('../db/setup2.js');
 
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
 
             // * Body of the command
             const username = msg.member.user.tag   
-            await update(username)
+            await saveUser(username)
             const data = await findBy(username)
             // * End of the body
 
