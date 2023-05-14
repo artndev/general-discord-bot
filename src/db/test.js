@@ -1,9 +1,9 @@
-const { saveUser } = require("./setup2.js")
+// const { saveUser } = require("./index.js")
 
-const utcDate1 = new Date(Date.UTC(96, 1, 2, 3, 4, 5));
-console.log(utcDate1)
-saveUser("discord#1111").then((data) => console.log(data))
+// const utcDate1 = new Date(Date.UTC(96, 1, 2, 3, 4, 5));
+// console.log(utcDate1)
+// saveUser("discord#1111").then((data) => console.log(data))
 
-//saveUser("discord#1111", {author: "Test", text: "Test"})
-//(QUOTES_API_URL).then((data) => { console.log(data.length) })
+// saveUser("discord#1111", {author: "Test", text: "Test"})
+// (QUOTES_API_URL).then((data) => { console.log(data.length) })
     

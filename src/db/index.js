@@ -21,7 +21,7 @@ module.exports = {
             }
             // * End of the body
         } 
-        catch (err) { throw err }
+        catch (err) { console.log(err) }
         finally { 
             setTimeout(() => {
                 mongoose.disconnect() 
@@ -37,7 +37,7 @@ module.exports = {
                     await module.exports.updateUser(username)
 
                 console.log("Такой USERNAME уже занят :(")
-                return null
+                return res
             }
             else {
                 // * Body of the function       
@@ -58,7 +58,7 @@ module.exports = {
                 // * End of the body
             }
         } 
-        catch (err) { throw err }
+        catch (err) { console.log(err) }
         finally { 
             setTimeout(() => {
                 mongoose.disconnect() 
@@ -89,7 +89,7 @@ module.exports = {
             }
             // * End of the body
         } 
-        catch (err) { throw err }
+        catch (err) { console.log(err) }
         finally { 
             setTimeout(() => {
                 mongoose.disconnect() 
