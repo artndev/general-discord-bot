@@ -7,12 +7,10 @@ module.exports = {
             const response = await fetch(url);
 
             if (response.ok) { 
-                return await response.json(); 
+                return (await response.json()); 
             }
         } 
-        catch (err) { 
-            throw err; 
-        }
+        catch (err) { console.log(err) }
     },
     dateToHours: (date) => { 
         return Math.floor(new Date(date).getTime() / 3.6e+6) 
@@ -20,9 +18,27 @@ module.exports = {
     getRandomArbitrary: (min, max) => {
         return Math.floor(Math.random() * (max - min) + min);
     },
-    getRandomQuote: async () => {
+    getQuote: async () => {
         const data = await module.exports.getData(QUOTES_API_URL)
+        const from = module.exports.getRandomArbitrary(0, data.length - 1)
 
-        return data[module.exports.getRandomArbitrary(0, data.length - 1)]
+        return data[from]
     },
+    getQuotes: async (amount) => {
+        const data = await module.exports.getData(QUOTES_API_URL)
+        const from = module.exports.getRandomArbitrary(0, data.length - amount - 1)
+        const parsedData = data.slice(from, from + amount)
+        
+        let res = ""
+        parsedData.forEach(q => {
+            Object.keys(q)
+                .filter(k => { return q[k] })
+                .reverse()
+                .forEach(k => {
+                    res += `**${k.charAt(0).toUpperCase() + k.slice(1)}:**\n${q[k]}\n`
+                })
+            res += "\n"
+        });
+        return res
+    }
 }

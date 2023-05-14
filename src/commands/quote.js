@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { getRandomQuote } = require('../utils.js')
+const { getQuote } = require('../utils.js')
 const { qEmbed } = require('../embeds.js')
 const { qRow } = require('../buttons.js')
 
@@ -13,7 +13,7 @@ module.exports = {
             await msg.deferReply({ ephemeral: true });
 
             // * Body of the command
-            const quote = await getRandomQuote()
+            const quote = await getQuote()
             // * End of the body
     
             await msg.editReply({
@@ -27,12 +27,12 @@ module.exports = {
         } 
         catch (err) { console.log(err) }
 	},
-    async edit(inter) {
+    async qEdit(inter) {
         try {
             await inter.deferUpdate()
 
             // * Body of the command
-            const quote = await getRandomQuote()
+            const quote = await getQuote()
             // * End of the body
     
             await inter.editReply({

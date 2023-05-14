@@ -1,7 +1,7 @@
 require("dotenv").config()
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
-const { edit }  = require("./commands/quote.js");
+const { qEdit }  = require("./commands/quote.js");
 const fs = require('fs');
 const path = require('path');
 
@@ -50,7 +50,7 @@ client.on(Events.InteractionCreate, async interaction => {
 		if (
 			interaction.message.interaction.commandName === "quote" &&
 			interaction.customId === "refresh"
-		) { edit(interaction) }
+		) { qEdit(interaction) }
 	}
 });
 
