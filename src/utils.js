@@ -27,18 +27,19 @@ module.exports = {
     getQuotes: async (amount) => {
         const data = await module.exports.getData(QUOTES_API_URL)
         const from = module.exports.getRandomArbitrary(0, data.length - amount - 1)
-        const parsedData = data.slice(from, from + amount)
         
-        let res = ""
-        parsedData.forEach(q => {
-            Object.keys(q)
-                .filter(k => { return q[k] })
-                .reverse()
-                .forEach(k => {
-                    res += `**${k.charAt(0).toUpperCase() + k.slice(1)}:**\n${q[k]}\n`
-                })
-            res += "\n"
-        });
+        let res = []
+        data.slice(from, from + amount)
+            .map(q => {
+                return { author: !q["author"] ? "Unknown Author" : q["author"], text: q["text"] }
+            })
+            .reverse()
+            .forEach((q, i) => {
+                res.push({
+                    name: `**${(i + 1).toString()}. ${q["author"]}:**`,
+                    value: `${q["text"]}`
+                })            
+            });
         return res
     }
 }

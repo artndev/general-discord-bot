@@ -1,5 +1,5 @@
 require("dotenv").config()
-const { dateToHours, getRandomQuote } = require("../utils.js")
+const { dateToHours, getQuote } = require("../utils.js")
 const UserModel = require("./Models/User.js")
 const mongoose = require("mongoose")
 
@@ -30,11 +30,11 @@ module.exports = {
     },
     saveUser: async (username) => {
         try {
-            const res = await module.exports.findUser(username)
+            let res = await module.exports.findUser(username)
             if (res) {
                 const isDaily = (dateToHours(Date.now()) - dateToHours(res.date)) >= 24 
                 if (isDaily)
-                    await module.exports.updateUser(username)
+                    res = (await module.exports.updateUser(username))["value"]["daily_quote"]
 
                 console.log("Такой USERNAME уже занят :(")
                 return res
@@ -45,7 +45,7 @@ module.exports = {
         
                 const doc = await (new UserModel({
                     username: username,
-                    daily_quote: await getRandomQuote()
+                    daily_quote: await getQuote()
                 })).save()
                 if (doc) {
                     console.log("Пользователь успешно сохранен!\n", doc)
@@ -74,7 +74,7 @@ module.exports = {
                 { username: username },
                 { 
                     $set: {
-                        daily_quote: await getRandomQuote(),
+                        daily_quote: await getQuote(),
                         date: new Date 
                     }
                 }

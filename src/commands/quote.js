@@ -17,11 +17,13 @@ module.exports = {
             // * End of the body
     
             await msg.editReply({
-                embeds: [qEmbed(
-                    quote["author"], 
-                    quote["text"],
-                    `Requested by ${ msg.member.user.tag }`
-                )],
+                embeds: [
+                    qEmbed(
+                        quote["author"], 
+                        quote["text"],
+                        `Requested by ${ msg.member.user.tag }`
+                    )
+                ],
                 components: [ qRow("Refresh") ],
             })
         } 
@@ -36,11 +38,13 @@ module.exports = {
             // * End of the body
     
             await inter.editReply({
-                embeds: [qEmbed(
-                    quote["author"], 
-                    quote["text"],
-                    `Requested by ${ inter.user.tag }`
-                )]
+                embeds: [
+                    qEmbed(
+                        quote["author"], 
+                        quote["text"],
+                        `Requested by ${ inter.user.tag }`
+                    )
+                ],
             }) 
         } 
         catch (err) { console.log(err) }       

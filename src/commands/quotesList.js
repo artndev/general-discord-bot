@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { getQuotes } = require('../utils.js')
-const { qEmbed } = require('../embeds.js')
+const { qsEmbed } = require('../embeds.js')
 
 
 module.exports = {
@@ -20,15 +20,19 @@ module.exports = {
             await msg.deferReply({ ephemeral: true });
 
             // * Body of the command
-            const quotes = await getQuotes(msg.options.getNumber("amount"))
+            const amount = msg.options.getNumber("amount")
+            const quotes = await getQuotes(amount)
             // * End of the body
 
             await msg.editReply({
-                embeds: [qEmbed(
-                    "The Quote List",
-                    quotes,
-                    `Requested by ${ msg.member.user.tag  }`
-                )],
+                embeds: [
+                    qsEmbed(
+                        "The Quote List",
+                        `There are your ${ amount.toString() } quotes...`,
+                        `Requested by ${ msg.member.user.tag  }`,
+                        quotes
+                    )
+                ],
             })
         } 
         catch (err) { console.log(err) }
