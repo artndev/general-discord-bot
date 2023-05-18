@@ -9,7 +9,7 @@ module.exports = {
         try {
             await mongoose.connect(process.env.CONNECTION_URI) 
     
-            // * Body of the function
+            // ? Body of the function
             const doc = await UserModel.collection.findOne({ username: username })
             if (doc) {
                 console.log("Пользователь успешно найден!\n", doc)
@@ -19,7 +19,7 @@ module.exports = {
                 console.log("Не удалось найти пользователя :(")
                 return null
             }
-            // * End of the body
+            // ? End of the body
         } 
         catch (err) { console.log(err) }
         finally { 
@@ -40,7 +40,7 @@ module.exports = {
                 return res
             }
             else {
-                // * Body of the function       
+                // ? Body of the function       
                 await mongoose.connect(process.env.CONNECTION_URI)      
         
                 const doc = await (new UserModel({
@@ -55,7 +55,7 @@ module.exports = {
                     console.log("Не удалось сохранить пользователя :(")
                     return null
                 }
-                // * End of the body
+                // ? End of the body
             }
         } 
         catch (err) { console.log(err) }
@@ -69,7 +69,7 @@ module.exports = {
         try {
             await mongoose.connect(process.env.CONNECTION_URI) 
     
-            // * Body of the function
+            // ? Body of the function
             const doc = await UserModel.collection.findOneAndUpdate(
                 { username: username },
                 { 
@@ -87,7 +87,7 @@ module.exports = {
                 console.log("Не удалось обновить пользователя :(")
                 return null
             }
-            // * End of the body
+            // ? End of the body
         } 
         catch (err) { console.log(err) }
         finally { 

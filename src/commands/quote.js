@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { getQuote } = require('../utils.js')
 const { qEmbed } = require('../embeds.js')
-const { qRow } = require('../buttons.js')
+const { qRow } = require('../rows.js')
 
 
 module.exports = {
@@ -12,16 +12,15 @@ module.exports = {
         try {
             await msg.deferReply({ ephemeral: true });
 
-            // * Body of the command
+            // ? Body of the command
             const quote = await getQuote()
-            // * End of the body
+            // ? End of the body
     
             await msg.editReply({
                 embeds: [
                     qEmbed(
                         quote["author"], 
-                        quote["text"],
-                        `Requested by ${ msg.member.user.tag }`
+                        quote["text"]
                     )
                 ],
                 components: [ qRow("Refresh") ],
@@ -33,16 +32,15 @@ module.exports = {
         try {
             await inter.deferUpdate()
 
-            // * Body of the command
+            // ? Body of the command
             const quote = await getQuote()
-            // * End of the body
+            // ? End of the body
     
             await inter.editReply({
                 embeds: [
                     qEmbed(
                         quote["author"], 
-                        quote["text"],
-                        `Requested by ${ inter.user.tag }`
+                        quote["text"]
                     )
                 ],
             }) 

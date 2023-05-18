@@ -11,18 +11,15 @@ module.exports = {
         try {
             await msg.deferReply({ ephemeral: true });
 
-            // * Body of the command
-            const username = msg.member.user.tag 
-            const user = await saveUser(username)
-            console.log(user)
-            // * End of the body
+            // ? Body of the command
+            const user = await saveUser(msg.member.user.tag)
+            // ? End of the body
 
             await msg.editReply({
                 embeds: [
                     qEmbed(
                         user["daily_quote"]["author"],
-                        user["daily_quote"]["text"],
-                        `Requested by ${ username }`
+                        user["daily_quote"]["text"]
                     )
                 ],
             })

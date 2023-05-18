@@ -4,6 +4,7 @@ const { DISCORD_TOKEN } = process.env;
 const { qEdit }  = require("./commands/quote.js");
 const fs = require('fs');
 const path = require('path');
+const { qsEdit } = require("./commands/quotes.js");
 
 
 const client = new Client({
@@ -49,8 +50,16 @@ client.on(Events.InteractionCreate, async interaction => {
 	else if (interaction.isButton()) {
 		if (
 			interaction.message.interaction.commandName === "quote" &&
-			interaction.customId === "refresh"
-		) { qEdit(interaction) }
+			interaction.customId === "qRefresh"
+		) { 
+			await qEdit(interaction) 
+		}
+		else if (
+			interaction.message.interaction.commandName === "quotes" &&
+			interaction.customId === "qsRefresh"
+		) {
+			await qsEdit(interaction)
+		}
 	}
 });
 
