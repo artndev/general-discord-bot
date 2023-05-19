@@ -10,7 +10,9 @@ module.exports = {
                 return await response.json(); 
             }
         } 
-        catch (err) { console.log(err) }
+        catch (err) { 
+            console.log(err)
+        }
     },
     dateToHours: (date) => { 
         return Math.floor(new Date(date).getTime() / 3.6e+6) 
@@ -22,15 +24,18 @@ module.exports = {
         return parseInt([...(await str.matchAll(/\d/g))].join(""))
     },
     getQuote: async () => {
-        const data = await module.exports.getData(QUOTES_API_URL)
-        const from = module.exports.getRandomArbitrary(0, data.length - 1)
-
-        return data[from]
+        let q = await module.exports.getData(QUOTES_API_URL)
+        q = q[module.exports.getRandomArbitrary(0, q.length - 1)]
+        
+        return {
+            author: !q["author"] ? "Unknown Author" : q["author"],
+            text: q["text"]
+        }
     },
     getQuotes: async (amount) => {
         const data = await module.exports.getData(QUOTES_API_URL)
         const from = module.exports.getRandomArbitrary(0, data.length - amount - 1)
-        
+
         let res = []
         data.slice(from, from + amount)
             .map(q => {

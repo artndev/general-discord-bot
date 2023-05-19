@@ -2,12 +2,13 @@ const { SlashCommandBuilder } = require('discord.js');
 const { getQuotes, fetchDigits } = require('../utils.js')
 const { qsEmbed } = require('../embeds.js');
 const { qsRow } = require('../rows.js');
+const { path } = require("app-root-path")
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('quotes')
-		.setDescription('The list of quotes')
+		.setDescription('List of quotes')
         .addNumberOption((opt) =>
             opt
                 .setRequired(true)
@@ -34,12 +35,20 @@ module.exports = {
                     )
                 ],
                 components: [ qsRow("Refresh") ],
+                files: [{
+                    attachment: path + "/src/imgs/quotes-sign.png",
+                    name: "quotes-sign.png"
+                }]
             })
         } 
-        catch (err) { console.log(err) }
+        catch (err) { 
+            console.log(err) 
+        }
 	},
     async qsEdit(inter) {
         try {
+            if (inter.member.user.tag !== inter.user.tag)
+                return
             await inter.deferUpdate()
 
             // ? Body of the command
@@ -57,7 +66,9 @@ module.exports = {
                 ],
             }) 
         } 
-        catch (err) { console.log(err) }  
+        catch (err) { 
+            console.log(err) 
+        }  
     }
 };
 

@@ -1,12 +1,13 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { qEmbed } = require('../embeds.js')
 const { saveUser } = require('../db/index.js');
+const { path } = require("app-root-path")
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('daily_quote')
-		.setDescription('The quote of the day'),
+		.setDescription('Quote of the day'),
 	async execute(msg) {
         try {
             await msg.deferReply({ ephemeral: true });
@@ -22,9 +23,15 @@ module.exports = {
                         user["daily_quote"]["text"]
                     )
                 ],
+                files: [{
+                    attachment: path + "/src/imgs/quotes-sign.png",
+                    name: "quotes-sign.png"
+                }]
             })
         } 
-        catch (err) { console.log(err) }
+        catch (err) { 
+            console.log(err) 
+        }
 	},
 };
 
