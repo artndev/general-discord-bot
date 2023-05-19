@@ -30,10 +30,10 @@ module.exports = {
             await mongoose.connect(process.env.CONNECTION_URI)            
 
             const res = await UserModel.collection.findOne({ username: username })
-            const isDaily = (Date.now() - dateToHours(res.date)) >= 24
             if (res) {
+                const isDaily = (Date.now() - dateToHours(res.date)) >= 24
                 if (isDaily) {
-                    await UserModel.collection.findOneAndUpdate(
+                    UserModel.collection.findOneAndUpdate(
                         { username: username },
                         { 
                             $set: {
