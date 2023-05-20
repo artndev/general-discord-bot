@@ -8,12 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 const { SlashCommandBuilder, ChatInputCommandInteraction, ButtonInteraction, SlashCommandNumberOption } = require('discord.js');
 const { path } = require("app-root-path");
 const { getQuotes, fetchDigits } = require(path + "/dist/other/utils.js");
-const { qsEmbed } = require(path + "/src/other/embeds.js");
-const { qsRow } = require(path + "/src/other/rows.js");
+const { qsEmbed } = require(path + "/dist/other/embeds.js");
+const { qsRow } = require(path + "/dist/other/rows.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('quotes')
@@ -34,7 +33,7 @@ module.exports = {
                 // ? End of the body
                 yield msg.editReply({
                     embeds: [
-                        qsEmbed("The Quotes List", quotes, amount)
+                        qsEmbed("The Quotes List", amount, quotes)
                     ],
                     components: [qsRow("Refresh")],
                     files: [{
@@ -60,7 +59,7 @@ module.exports = {
                 // ? End of the body
                 yield inter.editReply({
                     embeds: [
-                        qsEmbed("The Quotes List", quotes, amount)
+                        qsEmbed("The Quotes List", amount, quotes)
                     ],
                 });
             }

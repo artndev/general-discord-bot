@@ -1,11 +1,13 @@
+export {}
 require("dotenv").config()
-const { dateToHours, getQuote } = require("../../dist/other/utils.js")
-const UserModel = require("./Models/User.js")
+const { path } = require("app-root-path")
+const { dateToHours, getQuote } = require(path + "/dist/other/utils.js")
+const UserModel = require(path + "/src/db/Models/User.js")
 const mongoose = require("mongoose")
 
 
 module.exports = {
-    findUser: async (username) => {
+    findUser: async (username: string) => {
         try {
             await mongoose.connect(process.env.CONNECTION_URI) 
     
@@ -21,14 +23,18 @@ module.exports = {
             }
             // ? End of the body
         } 
-        catch (err) { console.log(err) }
+        catch (err) {
+            if (err instanceof Error) {
+                console.error(err) 
+            }
+        }
         finally { 
             setTimeout(() => {
                 mongoose.disconnect() 
             }, 3000)
         }
     },
-    saveUser: async (username) => {
+    saveUser: async (username: string) => {
         try {
             let res = await module.exports.findUser(username)
             if (res) {
@@ -58,14 +64,18 @@ module.exports = {
                 // ? End of the body
             }
         } 
-        catch (err) { console.log(err) }
+        catch (err) { 
+            if (err instanceof Error) {
+                console.error(err) 
+            }
+        }
         finally { 
             setTimeout(() => {
                 mongoose.disconnect() 
             }, 3000)
         }
     },
-    updateUser: async (username) => {
+    updateUser: async (username: string) => {
         try {
             await mongoose.connect(process.env.CONNECTION_URI) 
     
@@ -89,7 +99,11 @@ module.exports = {
             }
             // ? End of the body
         } 
-        catch (err) { console.log(err) }
+        catch (err) {
+            if (err instanceof Error) {
+                console.error(err) 
+            }
+        }
         finally { 
             setTimeout(() => {
                 mongoose.disconnect() 

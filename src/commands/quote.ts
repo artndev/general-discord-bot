@@ -6,8 +6,8 @@ const {
 } = require('discord.js');
 const { path } = require("app-root-path")
 const { getQuote } = require(path + "/dist/other/utils.js")
-const { qEmbed } = require(path + "/src/other/embeds.js")
-const { qRow } = require(path + "/src/other/rows.js")
+const { qEmbed } = require(path + "/dist/other/embeds.js")
+const { qRow } = require(path + "/dist/other/rows.js")
 
 
 module.exports = {

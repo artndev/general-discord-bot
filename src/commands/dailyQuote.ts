@@ -1,8 +1,8 @@
 export {}
 const { SlashCommandBuilder, ChatInputCommandInteraction } = require('discord.js');
 const { path } = require("app-root-path")
-const { qEmbed } = require(path + "/src/other/embeds.js")
-const { saveUser } = require(path + "/src/db/index.js");
+const { qEmbed } = require(path + "/dist/other/embeds.js")
+const { saveUser } = require(path + "/dist/db/index.js");
 
 
 module.exports = {

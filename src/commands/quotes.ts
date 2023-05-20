@@ -1,4 +1,3 @@
-export {}
 const { 
     SlashCommandBuilder, 
     ChatInputCommandInteraction, 
@@ -7,8 +6,8 @@ const {
 } = require('discord.js');
 const { path } = require("app-root-path")
 const { getQuotes, fetchDigits } = require(path + "/dist/other/utils.js")
-const { qsEmbed } = require(path + "/src/other/embeds.js")
-const { qsRow } = require(path + "/src/other/rows.js")
+const { qsEmbed } = require(path + "/dist/other/embeds.js")
+const { qsRow } = require(path + "/dist/other/rows.js")
 
 
 module.exports = {
@@ -26,7 +25,7 @@ module.exports = {
 	async execute(msg: typeof ChatInputCommandInteraction) {
         try {
             await msg.deferReply({ ephemeral: true })
-
+            
             // ? Body of the command
             const amount = msg.options.getNumber("amount")
             const quotes = await getQuotes(amount)
@@ -36,8 +35,8 @@ module.exports = {
                 embeds: [
                     qsEmbed(
                         "The Quotes List",
-                        quotes,
-                        amount
+                        amount,
+                        quotes
                     )
                 ],
                 components: [ qsRow("Refresh") ],
@@ -66,8 +65,8 @@ module.exports = {
                 embeds: [
                     qsEmbed(
                         "The Quotes List",
-                        quotes,
-                        amount
+                        amount,
+                        quotes
                     )
                 ],
             }) 
