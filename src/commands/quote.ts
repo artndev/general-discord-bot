@@ -36,8 +36,10 @@ module.exports = {
                 }]
             })
         } 
-        catch (err: any) { 
-            console.log(err) 
+        catch (err) { 
+            if (err instanceof Error) {
+                console.error(err)
+            } 
         }
 	},
     async qEdit(inter: typeof ButtonInteraction) {
@@ -59,8 +61,10 @@ module.exports = {
                 ],
             }) 
         } 
-        catch (err: any) { 
-            console.log(err) 
+        catch (err) { 
+            if (err instanceof Error) {
+                console.error(err)
+            } 
         }       
     }
 };
