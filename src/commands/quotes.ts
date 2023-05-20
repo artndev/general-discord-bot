@@ -1,15 +1,21 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { getQuotes, fetchDigits } = require('../utils.js')
-const { qsEmbed } = require('../embeds.js');
-const { qsRow } = require('../rows.js');
+export {}
+const { 
+    SlashCommandBuilder, 
+    ChatInputCommandInteraction, 
+    ButtonInteraction,
+    SlashCommandNumberOption
+} = require('discord.js');
 const { path } = require("app-root-path")
+const { getQuotes, fetchDigits } = require(path + "/dist/other/utils.js")
+const { qsEmbed } = require(path + "/src/other/embeds.js")
+const { qsRow } = require(path + "/src/other/rows.js")
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('quotes')
 		.setDescription('List of quotes')
-        .addNumberOption((opt) =>
+        .addNumberOption((opt: typeof SlashCommandNumberOption) =>
             opt
                 .setRequired(true)
                 .setMinValue(2)
@@ -17,7 +23,7 @@ module.exports = {
                 .setName("amount")
                 .setDescription("The amount of quotes")
         ),
-	async execute(msg) {
+	async execute(msg: typeof ChatInputCommandInteraction) {
         try {
             await msg.deferReply({ ephemeral: true })
 
@@ -41,11 +47,11 @@ module.exports = {
                 }]
             })
         } 
-        catch (err) { 
+        catch (err: any) { 
             console.log(err) 
         }
 	},
-    async qsEdit(inter) {
+    async qsEdit(inter: typeof ButtonInteraction) {
         try {
             if (inter.member.user.tag !== inter.user.tag)
                 return
@@ -66,7 +72,7 @@ module.exports = {
                 ],
             }) 
         } 
-        catch (err) { 
+        catch (err: any) { 
             console.log(err) 
         }  
     }

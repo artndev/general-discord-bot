@@ -1,5 +1,5 @@
 require("dotenv").config()
-const { dateToHours, getQuote } = require("../utils.js")
+const { dateToHours, getQuote } = require("../../dist/other/utils.js")
 const UserModel = require("./Models/User.js")
 const mongoose = require("mongoose")
 

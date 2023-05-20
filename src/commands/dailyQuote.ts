@@ -1,14 +1,15 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { qEmbed } = require('../embeds.js')
-const { saveUser } = require('../db/index.js');
+export {}
+const { SlashCommandBuilder, ChatInputCommandInteraction } = require('discord.js');
 const { path } = require("app-root-path")
+const { qEmbed } = require(path + "/src/other/embeds.js")
+const { saveUser } = require(path + "/src/db/index.js");
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('daily_quote')
 		.setDescription('Quote of the day'),
-	async execute(msg) {
+	async execute(msg: typeof ChatInputCommandInteraction) {
         try {
             await msg.deferReply({ ephemeral: true });
 
@@ -29,8 +30,8 @@ module.exports = {
                 }]
             })
         } 
-        catch (err) { 
-            console.log(err) 
+        catch (err: any) { 
+            console.error(err) 
         }
 	},
 };

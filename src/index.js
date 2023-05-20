@@ -1,19 +1,26 @@
 require("dotenv").config()
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { 
+	Client, 
+	Collection, 
+	Events,
+	GatewayIntentBits
+} = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
-const { qEdit }  = require("./commands/quote.js");
-const { qsEdit } = require("./commands/quotes.js");
-const fs = require('fs');
-const path = require('path');
-
+const rootPath = require("app-root-path").path
+const { COMMANDS_FOLDER } = require("../config.json")
+const { qEdit }  = require("../dist/commands/quote.js");
+const { qsEdit } = require("../dist/commands/quotes.js");
+const fs = require("fs");
+const path = require("path");
 
 const client = new Client({
 	intents: [ GatewayIntentBits.Guilds ],
 });
 
 client.commands = new Collection();
-const commandsPath = path.join(__dirname, 'commands');
+const commandsPath = rootPath + COMMANDS_FOLDER // path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath);
+
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);

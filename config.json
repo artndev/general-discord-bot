@@ -1,3 +1,4 @@
 {
-    "QUOTES_API_URL": "https://type.fit/api/quotes/"
+    "QUOTES_API_URL": "https://type.fit/api/quotes/",
+    "COMMANDS_FOLDER": "/dist/commands"
 }
