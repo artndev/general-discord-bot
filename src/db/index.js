@@ -1,13 +1,11 @@
-export {}
 require("dotenv").config()
-const { path } = require("app-root-path")
-const { dateToHours, getQuote } = require(path + "/dist/other/utils.js")
-const UserModel = require(path + "/src/db/Models/User.js")
+const { dateToHours, getQuote } = require("../utils.js")
+const UserModel = require("./Models/User.js")
 const mongoose = require("mongoose")
 
 
 module.exports = {
-    findUser: async (username: string) => {
+    findUser: async (username) => {
         try {
             await mongoose.connect(process.env.CONNECTION_URI) 
     
@@ -18,7 +16,7 @@ module.exports = {
                 return doc
             }
             else {
-                console.log("Не удалось найти пользователя :(")
+                console.log("Не удалось найти пользователя.")
                 return null
             }
             // ? End of the body
@@ -34,7 +32,7 @@ module.exports = {
             }, 3000)
         }
     },
-    saveUser: async (username: string) => {
+    saveUser: async (username) => {
         try {
             let res = await module.exports.findUser(username)
             if (res) {
@@ -58,7 +56,7 @@ module.exports = {
                     return doc
                 }
                 else {
-                    console.log("Не удалось сохранить пользователя :(")
+                    console.log("Не удалось сохранить пользователя.")
                     return null
                 }
                 // ? End of the body
@@ -75,7 +73,7 @@ module.exports = {
             }, 3000)
         }
     },
-    updateUser: async (username: string) => {
+    updateUser: async (username) => {
         try {
             await mongoose.connect(process.env.CONNECTION_URI) 
     
@@ -94,7 +92,7 @@ module.exports = {
                 return doc
             }
             else {
-                console.log("Не удалось обновить пользователя :(")
+                console.log("Не удалось обновить пользователя.")
                 return null
             }
             // ? End of the body

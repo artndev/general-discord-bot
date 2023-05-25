@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "s": "tsc && node ./src/deploy-commands.js && node ./src/index.js",
+    "s": "node ./src/deploy-commands.js && node ./src/index.js",
     "r": "node ./src/deploy-commands.js",
     "m": "node ./dist/db/index.js",
     "u": "node ./dist/other/utils.js",

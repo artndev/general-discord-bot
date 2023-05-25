@@ -3,7 +3,7 @@ const { ButtonBuilder, ButtonStyle } = require("discord.js");
 
 
 module.exports = {
-    qRow: (label: string) => {
+    qRow: (label) => {
         return new ActionRowBuilder().setComponents(
             new ButtonBuilder()
                 .setCustomId("qRefresh")
@@ -11,7 +11,7 @@ module.exports = {
                 .setStyle(ButtonStyle.Success)
         )
     },
-    qsRow: (label: string) => {
+    qsRow: (label) => {
         return new ActionRowBuilder().setComponents(
             new ButtonBuilder()
                 .setCustomId("qsRefresh")

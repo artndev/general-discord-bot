@@ -2,7 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 
 
 module.exports = {
-    qEmbed: (title: string, desc: string) => {
+    qEmbed: (title, desc) => {
         return new EmbedBuilder()
             .setColor("#00af80")
             .setTitle(title)
@@ -10,7 +10,7 @@ module.exports = {
             .setThumbnail("attachment://quotes-sign.png")
             .setTimestamp()
     },
-    qsEmbed: (title: string, amount: number, fields: {name: string, value: string}[]) => {
+    qsEmbed: (title, amount, fields) => {
         return new EmbedBuilder()
             .setColor("#00af80")
             .setTitle(title)

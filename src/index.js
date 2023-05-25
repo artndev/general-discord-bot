@@ -6,10 +6,8 @@ const {
 	GatewayIntentBits
 } = require('discord.js');
 const { DISCORD_TOKEN } = process.env;
-const rootPath = require("app-root-path").path
-const { COMMANDS_FOLDER } = require("../config.json")
-const { qEdit }  = require("../dist/commands/quote.js");
-const { qsEdit } = require("../dist/commands/quotes.js");
+const { qEdit }  = require("./commands/quote.js");
+const { qsEdit } = require("./commands/quotes.js");
 const fs = require("fs");
 const path = require("path");
 
@@ -18,7 +16,7 @@ const client = new Client({
 });
 
 client.commands = new Collection();
-const commandsPath = rootPath + COMMANDS_FOLDER // path.join(__dirname, 'commands');
+const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath);
 
 

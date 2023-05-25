@@ -1,20 +1,15 @@
-const { 
-    SlashCommandBuilder, 
-    ChatInputCommandInteraction, 
-    ButtonInteraction,
-    SlashCommandNumberOption
-} = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { getQuotes, fetchDigits } = require("../utils.js")
+const { qsEmbed } = require("../embeds.js")
+const { qsRow } = require("../rows.js")
 const { path } = require("app-root-path")
-const { getQuotes, fetchDigits } = require(path + "/dist/other/utils.js")
-const { qsEmbed } = require(path + "/dist/other/embeds.js")
-const { qsRow } = require(path + "/dist/other/rows.js")
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('quotes')
 		.setDescription('List of quotes')
-        .addNumberOption((opt: typeof SlashCommandNumberOption) =>
+        .addNumberOption((opt) =>
             opt
                 .setRequired(true)
                 .setMinValue(2)
@@ -22,7 +17,7 @@ module.exports = {
                 .setName("amount")
                 .setDescription("The amount of quotes")
         ),
-	async execute(msg: typeof ChatInputCommandInteraction) {
+	async execute(msg) {
         try {
             await msg.deferReply({ ephemeral: true })
             
@@ -52,7 +47,7 @@ module.exports = {
             } 
         }
 	},
-    async qsEdit(inter: typeof ButtonInteraction) {
+    async qsEdit(inter) {
         try {
             if (inter.member.user.tag !== inter.user.tag)
                 return

@@ -1,20 +1,15 @@
-export {}
-const { 
-    SlashCommandBuilder, 
-    ChatInputCommandInteraction, 
-    ButtonInteraction 
-} = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { getQuote } = require("../utils.js")
+const { qEmbed } = require("../embeds.js")
+const { qRow } = require("../rows.js")
 const { path } = require("app-root-path")
-const { getQuote } = require(path + "/dist/other/utils.js")
-const { qEmbed } = require(path + "/dist/other/embeds.js")
-const { qRow } = require(path + "/dist/other/rows.js")
 
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('quote')
 		.setDescription('Random quote'),
-	async execute(msg: typeof ChatInputCommandInteraction) {
+	async execute(msg) {
         try {
             await msg.deferReply({ ephemeral: true });
 
@@ -42,7 +37,7 @@ module.exports = {
             } 
         }
 	},
-    async qEdit(inter: typeof ButtonInteraction) {
+    async qEdit(inter) {
         try {
             if (inter.member.user.tag !== inter.user.tag)
                 return
